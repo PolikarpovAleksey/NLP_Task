@@ -13,4 +13,4 @@
 python train.py train.txt
 
 Для запуска test.py в консоль необходимо прописать:
-python test.py test.txt
+test.py model.pth test.txt
