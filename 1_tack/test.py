@@ -21,7 +21,7 @@ def build_dataset(words, stoi, block_size=3):
     return X, Y
 
 def test(model_file, test_file):
-    # Загрузка параметров модели из файла
+
     parameter = torch.load(model_file)
     C = parameter['C']
     W1 = parameter['W1']
@@ -29,22 +29,16 @@ def test(model_file, test_file):
     W2 = parameter['W2']
     b2 = parameter['b2']
 
-    # Загрузка словаря символов
+
     stoi = torch.load('stoi.pth')
     itos = {i: s for s, i in stoi.items()}
 
-    # Построение пути к файлу с данными для тестирования
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    test_file_path = os.path.join(current_dir, test_file)
 
-    # Загрузка данных для тестирования из файла
-    args = sys.argv
-    words = open(args[2], "r", encoding="utf-8").read().splitlines()
+    words = open(test_file, "r", encoding="utf-8").read().splitlines()
 
-    # Построение датасета для тестирования
+
     X_test, Y_test = build_dataset(words, stoi)
 
-    # Вычисление потерь на тестовых данных
     emb = C[X_test]
     h = torch.tanh(emb.view(-1, 30) @ W1 + b1)
     logits = h @ W2 + b2
@@ -53,7 +47,7 @@ def test(model_file, test_file):
     print(Style.BRIGHT + f'test loss: {loss.item():.2f}')
     print('example:')
 
-    g = torch.Generator().manual_seed(2147483645 + 10)
+    g = torch.Generator().manual_seed(2147489999 + 10)
     for _ in range(5):
         out = []
         context = [0] * 3
@@ -70,5 +64,12 @@ def test(model_file, test_file):
 
         print(Fore.CYAN + ''.join(itos[i] for i in out))
 
-# Пример использования функции
-test('model.pth', 'test.txt')
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python test.py <model_file> <test_file>")
+        sys.exit(1)
+
+    model_file = sys.argv[1]
+    test_file = sys.argv[2]
+    test(model_file, test_file)

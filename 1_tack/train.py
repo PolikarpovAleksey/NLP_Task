@@ -20,7 +20,7 @@ def build_dataset(words, block_size=3):
 
     return X, Y
 
-# Чтение данных из файла train.txt
+
 args = sys.argv
 words = open(args[1], "r", encoding="utf-8").read().splitlines()
 
