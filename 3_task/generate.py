@@ -8,7 +8,7 @@ MODEL_NAME = 'cointegrated/rut5-small'
 
 if __name__ == '__main__':
     args = sys.argv
-    path_to_article = args[1]
+    path_to_article = "article.txt"
     prompt = PREFIX
 
     with open(path_to_article, 'r') as f:
