@@ -1,0 +1,4 @@
+datasets==2.19.0
+transformers==4.40.1
+torch==2.0.1+cu117
+tqdm==4.66.2
